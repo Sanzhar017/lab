@@ -4,30 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<form method="POST" action="{{ route('login') }}">
-    @csrf
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Login</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('login.submit') }}">
+                        @csrf
 
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus>
-        @error('email')
-        <span>{{ $message }}</span>
-        @enderror
-    </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" required autocomplete="email" autofocus>
+                            @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        @error('password')
-        <span>{{ $message }}</span>
-        @enderror
-    </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" id="password" name="password" class="form-control" required autocomplete="current-password">
+                            @error('password')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-    <div>
-        <button type="submit">Login</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

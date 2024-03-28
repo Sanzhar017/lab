@@ -3,70 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Registration Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<form method="POST" action="{{ route('login') }}">
-    @csrf
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Registration Form</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('register.submit') }}" class="p-4">
+                        @csrf
 
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus>
-        @error('email')
-        <span>{{ $message }}</span>
-        @enderror
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Confirm Password:</label>
+                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        @error('password')
-        <span>{{ $message }}</span>
-        @enderror
-    </div>
-
-    <div>
-        <button type="submit">Login</button>
-    </div>
-</form>
-
-<form method="POST" action="{{ route('register') }}">
-    @csrf
-
-    <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" value="{{ old('name') }}" required autofocus>
-        @error('name')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-
-    <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="{{ old('email') }}" required>
-        @error('email')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        @error('password')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-
-    <div class="form-group">
-        <label for="password_confirmation">Confirm Password:</label>
-        <input type="password" name="password_confirmation" id="password_confirmation" required>
-    </div>
-
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Register</button>
-    </div>
-</form>
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

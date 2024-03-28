@@ -9,41 +9,49 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
     public function register(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users|max:255',
-            'password' => 'required|string|min:6',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
-        $user = User::create($validatedData);
+        return redirect()->route('login')->with('success', 'Регистрация успешно завершена. Теперь вы можете войти.');
+    }
 
-        return response()->json(['user' => $user], 201);
+    public function showLoginForm()
+    {
+        return view('auth.login');
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
+        $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            $user = $request->user();
-            $token = $user->createToken('authToken')->plainTextToken;
-
-            return response()->json(['token' => $token], 200);
+            return redirect('/');
         } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return redirect()->route('login')->with('error', 'Неверный email или пароль.');
         }
     }
 
+
+
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Logged out'], 200);
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'Вы успешно вышли из системы.');
     }
 }
