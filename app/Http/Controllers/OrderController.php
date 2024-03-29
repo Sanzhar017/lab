@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -15,6 +16,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::paginate(10);
+
         return view('orders.index', compact('orders'));
     }
 
@@ -39,9 +41,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-        if (!auth()->user()->isAdmin()) {
-            return redirect()->route('orders.index')->with('error', 'You do not have permission to edit orders.');
-        }
+
 
         return view('orders.edit', compact('order'));
     }

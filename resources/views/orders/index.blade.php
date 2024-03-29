@@ -37,6 +37,7 @@
                     <td>{{ $order->date }}</td>
                     <td>{{ $order->status }}</td>
                     <td>
+
                         <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">Edit</a>
                         <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-success">Show</a> <!-- Добавляем кнопку "Show" -->
                         <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline">

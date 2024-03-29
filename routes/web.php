@@ -30,11 +30,8 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::resource('orders', OrderController::class);
-});
+    Route::get('/orders/export', [\App\Http\Controllers\ExportController::class, 'export'])->name('orders.export');
 
 
-Route::get('/orders/export', [\App\Http\Controllers\ExportController::class, 'export'])->name('orders.export');
 
 
