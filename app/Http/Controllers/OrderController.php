@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -13,72 +14,52 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('orders.index');
+        $orders = Order::paginate(10);
+        return view('orders.index', compact('orders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('orders.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $order = new Order();
+        $order->warehouse = $request->input('warehouse');
+        $order->city = $request->input('city');
+        $order->card = $request->input('card');
+        $order->quantity = $request->input('quantity');
+        $order->date = $request->input('date');
+        $order->save();
+
+        return redirect()->route('orders.index')->with('success', 'Order created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $order = Order::findOrFail($id);
+        return view('orders.edit', compact('order'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $order->warehouse = $request->input('warehouse');
+        $order->city = $request->input('city');
+        $order->card = $request->input('card');
+        $order->quantity = $request->input('quantity');
+        $order->date = $request->input('date');
+        $order->save();
+
+        return redirect()->route('orders.index')->with('success', 'Order updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $order->delete();
+
+        return redirect()->route('orders.index')->with('success', 'Order deleted successfully');
     }
 }
