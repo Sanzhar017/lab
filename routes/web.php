@@ -23,6 +23,8 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.su
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
+Route::resource('orders', \App\Http\Controllers\OrderController::class);
+
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
