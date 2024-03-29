@@ -41,7 +41,11 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         return view('orders.edit', compact('order'));
     }
-
+    public function show($id)
+    {
+        $order = Order::findOrFail($id);
+        return view('orders.show', compact('order'));
+    }
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);

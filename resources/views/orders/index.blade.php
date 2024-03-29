@@ -7,8 +7,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container mt-5">
-    <h2 class="mb-4">Orders</h2>
+<div class="container">
+    <h2>Orders</h2>
     <a href="{{ route('orders.create') }}" class="btn btn-primary mb-3">Create Order</a>
     @if ($orders->count() > 0)
         <table class="table">
@@ -36,6 +36,7 @@
                     <td>{{ $order->status }}</td>
                     <td>
                         <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-success">Show</a> <!-- Добавляем кнопку "Show" -->
                         <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline">
                             @csrf
                             @method('DELETE')
@@ -46,11 +47,10 @@
             @endforeach
             </tbody>
         </table>
+        {{ $orders->links('pagination::bootstrap-4') }}
     @else
         <p>No orders found.</p>
     @endif
-    {{ $orders->links('pagination::bootstrap-4') }}
-
 </div>
 </body>
 </html>

@@ -30,3 +30,6 @@ Route::get('/login', function () {
 })->name('login');
 
 
+Route::get('/orders/export', [\App\Http\Controllers\ExportController::class, 'export'])->name('orders.export');
+
+
