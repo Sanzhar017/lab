@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('quantity');
             $table->date('date');
             $table->string('status')->default('pending');
+            $table->string('role')->default('user');
+
             $table->timestamps();
         });
     }

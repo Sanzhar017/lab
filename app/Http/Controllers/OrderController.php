@@ -39,6 +39,10 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
+        if (!auth()->user()->isAdmin()) {
+            return redirect()->route('orders.index')->with('error', 'You do not have permission to edit orders.');
+        }
+
         return view('orders.edit', compact('order'));
     }
     public function show($id)

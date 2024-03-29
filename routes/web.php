@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,10 @@ Route::resource('orders', \App\Http\Controllers\OrderController::class);
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('orders', OrderController::class);
+});
 
 
 Route::get('/orders/export', [\App\Http\Controllers\ExportController::class, 'export'])->name('orders.export');

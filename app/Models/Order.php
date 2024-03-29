@@ -14,6 +14,7 @@ class Order extends Model
         'quantity',
         'date',
         'status',
+        'role'
     ];
     use HasFactory;
 }

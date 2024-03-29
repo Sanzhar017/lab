@@ -9,6 +9,8 @@
 <body>
 <div class="container">
     <h2>Orders</h2>
+    <a href="{{ route('orders.export') }}" class="btn btn-primary">Export Orders</a>
+
     <a href="{{ route('orders.create') }}" class="btn btn-primary mb-3">Create Order</a>
     @if ($orders->count() > 0)
         <table class="table">
@@ -51,6 +53,12 @@
     @else
         <p>No orders found.</p>
     @endif
+    @if (Auth::check())
+        <a href="{{ route('logout') }}" class="btn btn-danger">Logout</a>
+    @else
+        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+    @endif
+
 </div>
 </body>
 </html>
